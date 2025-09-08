@@ -3,7 +3,7 @@ locals {
 }
 
 module "databricks_management" {
-  source = "../common_modules/databricks_management"
+  source = "./common_modules/databricks_management"
 
   group_users = {
     "data-scientists" = [
