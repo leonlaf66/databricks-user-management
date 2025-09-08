@@ -9,13 +9,17 @@ locals {
     ]
   ])
 
-  unique_users = {
-    for membership in local.all_memberships :
-    membership.user_name => {
-      display_name = membership.display_name
-    }
-  }
+  unique_users = merge(flatten([
+    for group, users in var.group_users : [
+      for user in users : {
+        (user.user_name) = {
+          display_name = user.display_name
+        }
+      }
+    ]
+  ])...)
 }
+
 
 
 resource "databricks_group" "groups" {
